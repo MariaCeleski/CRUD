@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <center>
+      
+        <meta charset="UTF-8">
+        <div id="msg1" style="color: rgb(218, 160, 160);">
+            <style>
+                body{
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                }
+            </style>
+            
+            <h1>Frutas e verduras</h1>
+        </div>
+    </center>
+   
+</head>
+
+<body>
+    <div id="Teste2" style="color:whitesmoke;">
+        <center>
+            <img src="https://alimentossaudaveis.net/wp-content/uploads/2016/07/frutas-e-verduras-id-840x320.png">
+
+            <body bgcolor="black"> </body>
+            <h1>Frutas e verduras de todas as estações e seus beneficios</h1>
+            <form>
+                <fieldset>
+                    <label><strong>Fruta: </strong></label>
+                    <input id="inpFruta" type="text" name="inpFruta"  value="" size="50px"> <br><br>
+                    <label><strong>Verdura: </strong></label>
+                    <input id="inpVerdura" type="text" name="inpVerdura" value="" size="50px" > <br><br>
+                    <label><strong>Beneficios: </strong></label>
+                    <input id="inpBeneficio" type="text" name="inpBeneficio"  value="" size="50px"><br><br>
+                    <button type="button" onclick="cadastrar()">CADASTRAR PRODUTO</button>
+                    <button type="button" onclick="replicar()">REPLICAR </button>
+                    <button type="button" onclick="pesquisar()">PESQUISAR PRODUTO</button>
+                    <button type="button" onclick="editarRegistro()">EDITAR DADOS</button>
+                    <button type="button" onclick="deletarItem()">DELETAR ITEM</button>
+                    <button type="button" onclick="deletar()">LIMPAR CAMPOS</button>
+                </fieldset>        
+            </form>
+        </center>
+
+    <br>
+        <center> <form action="">
+            <fieldset>
+                <div id="divSaida"><strong><i>BENEFICIOS DAS FRUTAS E VERDURAS</i></strong></div>
+            </fieldset>
+        </form>
+        </center>
+        
+
+    <script>
+
+        // variáveis e vetores
+        var fruta = []
+        var verdura = []
+        var beneficio = []
+        var mira = -1
+                   
+        var entFruta = document.getElementById("inpFruta")
+        var entVerdura = document.getElementById("inpVerdura")
+        var entBeneficio= document.getElementById("inpBeneficio")
+        var saida = document.getElementById("divSaida")
+
+        // funções principais
+        function cadastrar() {//cadastro de frutas e mostrar no site.
+            fruta[fruta.length] = entFruta.value
+            verdura[verdura.length] = entVerdura.value
+            beneficio[beneficio.length] = entBeneficio.value
+               
+            entFruta.value = ""
+            entVerdura.value = ""
+            entBeneficio.value = ""    
+
+            atualizaRegistrosNaPagina()
+
+        }
+
+        function replicar() 
+        {
+
+            var cadFruta = ["abacaxi", "abacate", "amora", "ameixa", "araça","banana", "bergamota", "butia", "caja", "caju", "caqui", "mamão", "melão", "uva",
+                    "maçã", "graviola", "figo", "kiwi", "melancia", "manga", "limão", "maracuja"]
+
+                var cadVerdura = ["abobora", "abobrinha", "cebola", "tomate", "aipim", "cenoura", "pepino", "alface", "repolho", "beteraba", "rabanete", "couve", "couve-flor",
+                    "brocolis", "moranga", "cogumelo", "rabanete", "palmito", "pimentão", "beringela", "repolho"]
+
+                var cadBeneficio = ["cabelos", "olhos", "garganta", "pele", "ouvidos", "articulações", "joelho", "costas", "pes", "infecção urinaria", "intestino preso", "coração", "pulmão",
+                    "unhas", "coluna", "osteoporose", "fibromialgia", "insonia", "depressão", "diabetes"]
+
+            
+                var cadastroFake = Math.ceil(Math.random() * 15) + 5
+                cadastroFake += fruta.length
+
+                var dadosFakes
+                for (i = fruta.length; i < cadastroFake; i++) {
+                
+                dadosFakes = Math.floor(Math.random() * cadFruta.length)
+                fruta[i] = cadFruta[dadosFakes]
+                
+                dadosFakes = Math.floor(Math.random() * cadVerdura.length)
+                verdura[i] = cadVerdura[dadosFakes]
+                
+                dadosFakes = Math.floor(Math.random() * cadBeneficio.length)
+                beneficio[i] = cadBeneficio[dadosFakes]
+                
+            }
+            atualizaRegistrosNaPagina()
+        }
+
+        // funções secundárias 
+        function atualizaRegistrosNaPagina() {
+            saida.innerHTML = "INFORMAÇÕES <br>"
+
+            for (i = 0; i < fruta.length; i++) {
+                var frutaVerde = { fruta: fruta[i], verdura: verdura[i], beneficio: beneficio[i]}                
+                saida.innerHTML += "<b><br>Fruta: </b>" + fruta[i] + "<br>"
+                saida.innerHTML += "<b><br>Verdura: </b>" + verdura[i] + "<br>"
+                saida.innerHTML += "<b><br>Beneficio: </b>" + beneficio[i] + "<br>"
+                
+            }
+        }
+        
+        function salvar()
+        {
+            fruta[mira] = entFruta.value
+            verdura[mira] = entVerdura.value
+            beneficio[mira] = entBeneficio.value
+            mira = -1
+        }
+
+        atualizaRegistrosNaPagina()
+
+        function pesquisar() 
+        {
+                var frutapesquisada = entFruta.value //VAI USAR INPUT FRUTA COMO REFERENCIA                
+                mira = fruta.indexOf(frutapesquisada)
+                if (mira != -1)
+                {
+                    entFruta.value = fruta[mira]
+                    entVerdura.value = verdura[mira]
+                    entBeneficio.value = beneficio[mira]                   
+                } 
+                else {
+                    alert("a fruta não foi encontrada!")
+                }
+        }        
+
+        atualizaRegistrosNaPagina()
+
+        
+        function editarRegistro()
+        
+        {
+            if( entFruta.value !="" &&  entVerdura.value !="" && entBeneficio.value !="")
+            {
+                fruta[mira] = entFruta.value
+                verdura[mira]= entVerdura.value
+                beneficio[mira]= entBeneficio.value
+
+                entFruta.value = ""            
+                entVerdura.value = ""
+                entBeneficio.value = ""
+                
+        atualizaRegistrosNaPagina()
+                alert("Edição efetuada com sucesso!")
+
+            }
+            else
+            {
+                alert("Edição não efetuada")
+            }
+        }
+
+        function deletarItem()
+        {  
+            if(!confirm('Você tem certeza que deseja deletar esses dados, aperte OK.')) return false
+
+            for (i = 0; i < fruta.length; i++) {
+            
+               {
+                    fruta.splice(mira, 1)
+                    verdura.splice(mira, 1)
+                    beneficio.splice(mira, 1)
+                    
+                    entFruta.value = ""            
+                    entVerdura.value = ""
+                    entBeneficio.value = ""
+                    
+                }
+            }
+            atualizaRegistrosNaPagina()
+
+            alert("Dados excluídos com sucesso!")
+            
+        }
+        
+        function deletar() {
+                verdura.length = 0
+                fruta.length = 0
+                beneficio.length = 0
+               
+                entFruta.value = ""
+                entVerdura.value = ""
+                entBeneficio.value = ""
+
+                 alert("Dados excluídos com sucesso!")
+            }
+        atualizaRegistrosNaPagina() 
+        
+    </script>
+</body>
+
+
+</html>
